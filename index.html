@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Wi-Fi Strength Visualizer</title>
+  <script src="https://cdn.socket.io/4.7.1/socket.io.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --card-bg:#ffffff;
+      --muted:#6b7280;
+      --accent:#111827;
+      --shadow: 0 4px 18px rgba(16,24,40,0.06);
+    }
+    html,body{height:100%;margin:0;background:#f3f4f6;font-family:Inter, system-ui, Arial;}
+    .wrap{max-width:1180px;margin:28px auto;padding:12px;}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+    h1{margin:0;font-size:20px;color:var(--accent);}
+    .grid{display:grid;grid-template-columns:420px 1fr;gap:16px;}
+    .card{background:var(--card-bg);border-radius:10px;padding:14px;box-shadow:var(--shadow);min-height:420px;}
+    .card h3{margin:0 0 8px 0;font-size:14px}
+    #camera-wrap{display:flex;flex-direction:column;gap:8px}
+    #serverCam { width: 396px; height: 297px; background:#111; border-radius:8px; object-fit:cover; }
+    #browserCam { width: 396px; height: 297px; background:#111; border-radius:8px; display:none; object-fit:cover;}
+    .meta { display:flex; align-items:center; gap:10px; margin-top:8px; }
+    .signal-pill { padding:8px 12px;border-radius:999px;color:white;font-weight:600;background:gray; min-width:64px;text-align:center;}
+    #ssid { font-weight:600; color:var(--accent); }
+    #controls{margin-top:10px; display:flex; gap:8px; align-items:center;}
+    button { padding:8px 10px;border-radius:8px;border:1px solid #e5e7eb;background:white;cursor:pointer;}
+    #heatmap-area { display:flex; flex-direction:column; gap:10px; }
+    #heatmap-canvas { width: 780px; height:560px; border-radius:8px; background: #fff; cursor:crosshair; }
+    #points-list { margin-top:6px; font-size:13px; color:var(--muted); max-height:120px; overflow:auto; padding:6px; border-radius:6px; background:#fff; border:1px solid #eef2f7; }
+    .small { font-size:12px; color:var(--muted); }
+    .flex-row { display:flex; gap:10px; align-items:center; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Wi-Fi Strength Visualizer — Camera + Live Heatmap</h1>
+      <div class="small">Click heatmap to tag location • Download log to save points</div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Live Camera</h3>
+        <div id="camera-wrap">
+            <img id="serverCam" src="http://127.0.0.1:5000/video_feed" alt="server camera">
+          <video id="browserCam" autoplay muted playsinline></video>
+          <div class="meta">
+            <div><strong>Current SSID:</strong> <span id="ssid">—</span></div>
+            <div class="signal-pill" id="signal-pill">—</div>
+          </div>
+
+          <div id="controls">
+            <button id="use-browser">Use Browser Camera</button>
+            <button id="stop-browser" style="display:none">Stop Browser Camera</button>
+            <button id="download-log">Download CSV Log</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Heatmap (click anywhere to tag your location)</h3>
+        <canvas id="heatmap-canvas" width="780" height="560"></canvas>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+          <div class="small">Markers = recorded points. Colors: red weak → yellow → green strong.</div>
+          <div>
+            <button id="clear-local">Clear Local Points</button>
+          </div>
+        </div>
+        <div id="points-list" class="small"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/main.js"></script>
+</body>
+</html>

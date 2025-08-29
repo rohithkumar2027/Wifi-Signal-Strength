@@ -1,0 +1,35 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# ---- Virtual environment ----
+.venv/
+env/
+venv/
+
+# ---- IDE / Editor files ----
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- Logs ----
+*.log
+wifi_log.csv
+
+# ---- OS specific ----
+.DS_Store
+Thumbs.db
+
+# ---- Jupyter (if you use it) ----
+.ipynb_checkpoints/
+
+# ---- Node (if you later add npm for frontend) ----
+node_modules/
