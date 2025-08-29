@@ -1,0 +1,8 @@
+Wifi-Signal-Heatmap
+│── app.py                # Main Flask + Socket.IO app
+│── scanner.py            # Wi-Fi scanning functions (nmcli/netsh)
+│── static                # CSS/JS frontend files
+│── templates             # HTML (Jinja2 templates)
+│── data                  # Collected CSV logs
+│── requirements.txt      # Python dependencies
+│── README.md             # Documentation
